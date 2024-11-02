@@ -29,8 +29,8 @@ export async function getStaticPaths() {
 
 const { flower } = Astro.props as { flower: Flower };
 const imageName = flower.name.toLowerCase().replace(/\s+/g, '_');
-const imageUrl = `/src/images/${imageName === 'daisy' ? 'daisies' : imageName === 'marigold' ? 'marigolds' : imageName === 'black-eyed_susan' ? 'black_eyed_susan' : imageName === 'tulip' ? 'tulips' : imageName}.jpg`;
-
+const imageUrl = `/src/images/${imageName === 'daisy' ? 'daisies' : imageName === 'marigold' ? 'marigolds' : imageName === 'black-eyed_susan' ? 'black_eyed_susan' : imageName === 'tulip' ? 'tulips' : imageName === 'cherry_blossom' ? 'placeholder' : imageName}.jpg`;
+---
 <Layout title={`${flower.name} - Blooming Beauty`}>
   <main class="container mx-auto px-4 py-12">
     <article class="max-w-4xl mx-auto">
