@@ -1,0 +1,46 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import FlowerCard from '../../components/FlowerCard.astro';
+import { parse } from 'csv-parse/sync';
+import { readFileSync } from 'fs';
+
+export async function getStaticPaths() {
+  const fileContent = readFileSync('src/data/flowers.csv', 'utf-8');
+  const flowers = parse(fileContent, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  
+  const tags = new Set();
+  flowers.forEach(flower => {
+    tags.add(flower.season);
+    tags.add(flower.color);
+    tags.add(flower.type);
+  });
+  
+  return Array.from(tags).map(tag => ({
+    params: { tag },
+    props: { flowers: flowers.filter(flower => 
+      flower.season === tag || 
+      flower.color === tag || 
+      flower.type === tag
+    )}
+  }));
+}
+
+const { tag } = Astro.params;
+const { flowers } = Astro.props;
+---
+
+<Layout title={`${tag} Flowers - Blooming Beauty`}>
+  <main class="container mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold mb-2 text-center">Exploring {tag} Flowers</h1>
+    <p class="text-gray-600 dark:text-gray-400 text-center mb-12">Discover our collection of {tag.toLowerCase()} flowers</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {flowers.map((flower) => (
+        <FlowerCard flower={flower} />
+      ))}
+    </div>
+  </main>
+</Layout>

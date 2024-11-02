@@ -1,0 +1,80 @@
+---
+import { parse } from 'csv-parse/sync';
+import { readFileSync } from 'fs';
+
+const fileContent = readFileSync('src/data/flowers.csv', 'utf-8');
+const flowers = parse(fileContent, {
+  columns: true,
+  skip_empty_lines: true
+}).filter(flower => flower.featured === 'true');
+---
+
+<div class="w-full max-w-6xl mx-auto my-8">
+  <h2 class="text-3xl font-bold text-center mb-6">Featured Flowers</h2>
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      {flowers.map((flower) => (
+        <div class="swiper-slide">
+          <a href={`/flowers/${flower.name.toLowerCase().replace(/\s+/g, '-')}`} class="block">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+              <img 
+                src={`https://picsum.photos/seed/${flower.image}/800/600`} 
+                alt={flower.name} 
+                class="w-full h-64 object-cover"
+              />
+              <div class="p-4">
+                <h3 class="text-xl font-semibold mb-2">{flower.name}</h3>
+                <p class="text-gray-600 dark:text-gray-400">{flower.description}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      ))}
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script is:inline src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script is:inline>
+  new Swiper('.swiper', {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+      },
+      1024: {
+        slidesPerView: 3,
+      },
+    },
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+  });
+</script>
+
+<style>
+  .swiper {
+    padding: 2rem;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: var(--swiper-theme-color);
+  }
+  .swiper-pagination-bullet-active {
+    background: var(--swiper-theme-color);
+  }
+</style>

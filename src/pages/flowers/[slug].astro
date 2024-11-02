@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { parse } from 'csv-parse/sync';
+import { readFileSync } from 'fs';
+
+type Flower = {
+  id: number;
+  name: string;
+  description: string;
+  season: string;
+  color: string;
+  type: string;
+  featured: boolean;
+  image: number;
+};
+
+export async function getStaticPaths() {
+  const fileContent = readFileSync('src/data/flowers.csv', 'utf-8');
+  const flowers: Flower[] = parse(fileContent, {
+    columns: true,
+    skip_empty_lines: true
+  });
+  
+  return flowers.map(flower => ({
+    params: { slug: flower.name.toLowerCase().replace(/\s+/g, '-') },
+    props: { flower }
+  }));
+}
+
+const { flower } = Astro.props as { flower: Flower };
+const imageUrl = `https://picsum.photos/seed/${flower.image}/1200/800`;
+---
+
+<Layout title={`${flower.name} - Blooming Beauty`}>
+  <main class="container mx-auto px-4 py-12">
+    <article class="max-w-4xl mx-auto">
+      <div class="relative h-96 mb-8 rounded-2xl overflow-hidden">
+        <img 
+          src={imageUrl}
+          alt={flower.name}
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 p-8">
+          <h1 class="text-4xl font-bold text-white mb-2">{flower.name}</h1>
+          <div class="flex gap-2">
+            <span class="px-3 py-1 bg-primary-500/80 text-white rounded-full text-sm">
+              {flower.season}
+            </span>
+            <span class="px-3 py-1 bg-secondary-500/80 text-white rounded-full text-sm">
+              {flower.type}
+            </span>
+            <span class="px-3 py-1 bg-gray-500/80 text-white rounded-full text-sm">
+              {flower.color}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prose prose-lg dark:prose-invert max-w-none">
+        <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">{flower.description}</p>
+        
+        <h2 class="text-2xl font-bold mb-4">Growing Guide</h2>
+        <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 mb-8">
+          <ul class="space-y-3">
+            <li><strong>Season:</strong> Best planted in {flower.season}</li>
+            <li><strong>Type:</strong> {flower.type} plant</li>
+            <li><strong>Color:</strong> {flower.color}</li>
+            <li><strong>Care Level:</strong> {flower.type === 'perennial' ? 'Moderate' : 'Easy'}</li>
+          </ul>
+        </div>
+
+        <div class="flex justify-between items-center mt-12 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <a 
+            href="/"
+            class="inline-flex items-center px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Back to Home
+          </a>
+        </div>
+      </div>
+    </article>
+  </main>
+</Layout>

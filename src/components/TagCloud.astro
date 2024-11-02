@@ -1,0 +1,31 @@
+---
+import { parse } from 'csv-parse/sync';
+import { readFileSync } from 'fs';
+
+const fileContent = readFileSync('src/data/flowers.csv', 'utf-8');
+const flowers = parse(fileContent, {
+  columns: true,
+  skip_empty_lines: true
+});
+
+const tags = new Set();
+flowers.forEach(flower => {
+  tags.add(flower.season);
+  tags.add(flower.color);
+  tags.add(flower.type);
+});
+---
+
+<div class="w-full max-w-4xl mx-auto my-12 px-4">
+  <h3 class="text-2xl font-bold mb-6">Explore by Tags</h3>
+  <div class="flex flex-wrap gap-3">
+    {Array.from(tags).map((tag) => (
+      <a
+        href={`/tags/${tag}`}
+        class="px-4 py-2 bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-100 rounded-xl hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors duration-200"
+      >
+        {tag}
+      </a>
+    ))}
+  </div>
+</div>

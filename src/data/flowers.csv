@@ -1,0 +1,21 @@
+id,name,description,season,color,type,featured,image
+1,Rose,The symbol of love and passion,summer,red,garden,true,237
+2,Tulip,Spring's cheerful messenger,spring,various,bulb,true,152
+3,Sunflower,Tall and bright summer beauty,summer,yellow,annual,true,593
+4,Lavender,Fragrant purple beauty,summer,purple,herb,false,729
+5,Cherry Blossom,Delicate spring icon,spring,pink,tree,true,248
+6,Daisy,Simple and cheerful wildflower,spring,white,perennial,true,321
+7,Peony,Lush and romantic bloom,spring,pink,perennial,true,415
+8,Marigold,Vibrant and hardy annual,summer,orange,annual,true,587
+9,Orchid,Exotic and diverse beauty,year-round,various,perennial,true,814
+10,Hydrangea,Large round clusters of color,summer,blue,shrub,true,630
+11,Lotus,Symbol of purity and serenity,summer,pink,water,true,905
+12,Forget-me-not,Delicate blooms of remembrance,spring,blue,perennial,false,153
+13,Carnation,Fragrant and ruffled beauty,spring,various,perennial,true,382
+14,Zinnia,Bright and bold summer bloom,summer,various,annual,true,432
+15,Azalea,Colorful and vibrant shrubs,spring,various,shrub,true,555
+16,Gladiolus,Tall spikes of flowers,summer,various,bulb,false,699
+17,Black-eyed Susan,Cheerful yellow blooms,summer,yellow,perennial,true,223
+18,Irises,Elegant and stately flowers,spring,various,perennial,true,501
+19,Primrose,Early spring delight,spring,yellow,perennial,false,260
+20,Calla Lily,Graceful and sleek bloom,spring,white,perennial,true,412

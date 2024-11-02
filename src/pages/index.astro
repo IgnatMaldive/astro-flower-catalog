@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FlowerCarousel from '../components/FlowerCarousel.astro';
+import SearchBar from '../components/SearchBar.astro';
+import TagCloud from '../components/TagCloud.astro';
+import FlowerCard from '../components/FlowerCard.astro';
+import { parse } from 'csv-parse/sync';
+import { readFileSync } from 'fs';
+
+const fileContent = readFileSync('src/data/flowers.csv', 'utf-8');
+const flowers = parse(fileContent, {
+  columns: true,
+  skip_empty_lines: true
+});
+
+let seasonalFlowers = flowers.filter(flower => 
+  flower.season === (new Date().getMonth() >= 2 && new Date().getMonth() <= 8 ? 'summer' : 'spring')
+);
+---
+
+<Layout title="Blooming Beauty - Flower Blog">
+  <main class="container mx-auto px-4">
+    <div class="py-12 text-center">
+      <h1 class="text-5xl font-bold mb-4">
+        <span class="text-gradient">Blooming Beauty</span>
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400">Discover the wonderful world of flowers</p>
+    </div>
+    
+    <SearchBar />
+    <FlowerCarousel />
+    
+    <section class="my-16">
+      <h2 class="text-3xl font-bold mb-8 text-center">Seasonal Highlights</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="flower-grid">
+        {seasonalFlowers.map((flower) => (
+          <FlowerCard flower={flower} />
+        ))}
+      </div>
+    </section>
+    
+    <TagCloud />
+  </main>
+</Layout>
+
+<script>
+  const seasonalFlowers = JSON.parse(`{JSON.stringify(seasonalFlowers)}`);
+  document.addEventListener('search', (event) => {
+    const searchTerm = (event as CustomEvent).detail.toLowerCase();
+    const flowerGrid = document.getElementById('flower-grid');
+    const filteredFlowers = seasonalFlowers.filter(flower => 
+      flower.name.toLowerCase().includes(searchTerm) || 
+      flower.description.toLowerCase().includes(searchTerm)
+    );
+    flowerGrid.innerHTML = filteredFlowers.map(flower => `
+      <div class="flower-card">
+        <h3>${flower.name}</h3>
+        <p>${flower.description}</p>
+      </div>
+    `).join('');
+  });
+</script>
+
+<style>
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-500;
+  }
+</style>
