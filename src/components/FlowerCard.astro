@@ -12,7 +12,7 @@ interface Props {
 const { flower } = Astro.props;
 const slug = flower.name.toLowerCase().replace(/\s+/g, '-');
 const imageName = flower.name.toLowerCase().replace(/\s+/g, '_');
-const imageUrl = `/src/images/${imageName === 'daisy' ? 'daisies' : imageName === 'marigold' ? 'marigolds' : imageName === 'black-eyed_susan' ? 'black_eyed_susan' : imageName === 'tulip' ? 'tulips' : imageName}.jpg`;
+const imageUrl = `../images/${imageName === 'daisy' ? 'daisies' : imageName === 'marigold' ? 'marigolds' : imageName === 'black-eyed_susan' ? 'black_eyed_susan' : imageName === 'tulip' ? 'tulips' : imageName === 'cherry_blossom' ? 'placeholder' : imageName}.jpg`;
 ---
 
 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-[1.02] transition-transform duration-200">
