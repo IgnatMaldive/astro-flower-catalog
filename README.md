@@ -72,9 +72,7 @@ Contributions are welcome! Feel free to open issues, submit PRs, or suggest feat
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-## 📬 Contact
 
-For any questions or feedback, please reach out via GitHub Issues or contact us at yourname@example.com.
 
 ---
 
