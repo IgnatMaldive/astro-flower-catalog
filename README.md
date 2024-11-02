@@ -62,7 +62,7 @@ astro-flower-catalog/
 
 ## 👀 Live Preview
 
-Check out the live demo here: [Blooming Beauty Flower Catalog](https://astro-flower-catalog-demo.vercel.app) 🌐
+Check out the live demo here: [Blooming Beauty Flower Catalog](https://astro-flower-catalog.vercel.app/) 🌐
 
 ## 🙏 Contributing
 
