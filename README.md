@@ -1,4 +1,4 @@
-Here's a sample README file for your "Astro Flower Catalog" project that makes it informative and engaging with emoji and educational aspects.
+![Capture Image](capture.jpg)
 
 ---
 
