@@ -13,23 +13,27 @@ const flowers = parse(fileContent, {
   <h2 class="text-3xl font-bold text-center mb-6">Featured Flowers</h2>
   <div class="swiper">
     <div class="swiper-wrapper">
-      {flowers.map((flower) => (
-        <div class="swiper-slide">
-          <a href={`/flowers/${flower.name.toLowerCase().replace(/\s+/g, '-')}`} class="block">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-              <img 
-                src={`https://picsum.photos/seed/${flower.image}/800/600`} 
-                alt={flower.name} 
-                class="w-full h-64 object-cover"
-              />
-              <div class="p-4">
-                <h3 class="text-xl font-semibold mb-2">{flower.name}</h3>
-                <p class="text-gray-600 dark:text-gray-400">{flower.description}</p>
+      {flowers.map((flower) => {
+        const imageName = flower.name.toLowerCase().replace(/\s+/g, '_');
+        const imageUrl = `/src/images/${imageName === 'daisy' ? 'daisies' : imageName === 'marigold' ? 'marigolds' : imageName === 'black-eyed_susan' ? 'black_eyed_susan' : imageName === 'tulip' ? 'tulips' : imageName}.jpg`;
+        return (
+          <div class="swiper-slide">
+            <a href={`/flowers/${flower.name.toLowerCase().replace(/\s+/g, '-')}`} class="block">
+              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <img 
+                  src={imageUrl} 
+                  alt={flower.name} 
+                  class="w-full h-64 object-cover"
+                />
+                <div class="p-4">
+                  <h3 class="text-xl font-semibold mb-2">{flower.name}</h3>
+                  <p class="text-gray-600 dark:text-gray-400">{flower.description}</p>
+                </div>
               </div>
-            </div>
-          </a>
-        </div>
-      ))}
+            </a>
+          </div>
+        );
+      })}
     </div>
     <div class="swiper-pagination"></div>
     <div class="swiper-button-prev"></div>

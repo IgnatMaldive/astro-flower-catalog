@@ -28,8 +28,8 @@ export async function getStaticPaths() {
 }
 
 const { flower } = Astro.props as { flower: Flower };
-const imageUrl = `https://picsum.photos/seed/${flower.image}/1200/800`;
----
+const imageName = flower.name.toLowerCase().replace(/\s+/g, '_');
+const imageUrl = `/src/images/${imageName === 'daisy' ? 'daisies' : imageName === 'marigold' ? 'marigolds' : imageName === 'black-eyed_susan' ? 'black_eyed_susan' : imageName === 'tulip' ? 'tulips' : imageName}.jpg`;
 
 <Layout title={`${flower.name} - Blooming Beauty`}>
   <main class="container mx-auto px-4 py-12">
